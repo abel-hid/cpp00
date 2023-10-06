@@ -1,9 +1,12 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <limits>
 
 using namespace std;
 
-class Contact {
+class Contact 
+{
 private:
     string first_name;
     string last_name;
@@ -17,130 +20,239 @@ public:
         this->first_name = first_name;
     }
 
-    void setLastName(const string& last_name) {
+    void setLastName(const string& last_name) 
+    {
         this->last_name = last_name;
     }
 
-    void setNickname(const string& nickname) {
+    void setNickname(const string& nickname) 
+    {
         this->nickname = nickname;
     }
 
-    void setPhoneNumber(const string& phone_number) {
+    void setPhoneNumber(const string& phone_number) 
+    {
         this->phone_number = phone_number;
     }
 
-    void setDarkestSecret(const string& darkest_secret) {
+    void setDarkestSecret(const string& darkest_secret) 
+    {
         this->darkest_secret = darkest_secret;
     }
 
-    string getFirstName() const {
+    string getFirstName() const 
+    {
         return first_name;
     }
 
-    string getLastName() const {
+    string getLastName() const 
+    {
         return last_name;
     }
 
-    string getNickname() const {
+    string getNickname() const 
+    {
         return nickname;
     }
 
-    string getPhoneNumber() const {
+    string getPhoneNumber() const 
+    {
         return phone_number;
     }
 
-    string getDarkestSecret() const {
+    string getDarkestSecret() const 
+    {
         return darkest_secret;
     }
 };
 
-class PhoneBook {
-public:
+class PhoneBook 
+{
+public:  
     Contact* contacts[8];
-
-    PhoneBook() {
-        for (int i = 0; i < 8; i++) {
+  
+    PhoneBook() 
+    {
+        for (int i = 0; i < 8; i++) 
+        {
             contacts[i] = nullptr;
         }
     }
 
-    void addContact(Contact* contact) 
+    void addContact(Contact* contact, int& oldest_index) 
     {
-        for (int i = 0; i < 8; i++) {
-            if (contacts[i] == nullptr) {
+       
+        for (int i = 0; i < 8; i++) 
+        {
+            if (contacts[i] == nullptr) 
+            {
                 contacts[i] = contact;
+                break;
+            }
+            else if(contacts[7] != nullptr)
+            {
+                if(oldest_index == 8)
+                    oldest_index = 0;
+                delete contacts[oldest_index];
+                contacts[oldest_index] = contact;
+                oldest_index++;
                 break;
             }
         }
     }
 
-    ~PhoneBook() {
-        for (int i = 0; i < 8; i++) {
-            delete contacts[i];
+    ~PhoneBook()
+    {
+        for (int i = 0; i < 8; i++) 
+        {
+            if (contacts[i] != nullptr) 
+            {
+                delete contacts[i];
+            }
         }
     }
 };
 
-int main() {
+
+string ft_substr(const string& str, unsigned long len)
+{
+    if (str.length() <= len)
+        return str;
+    return (str.substr(0, len - 1) + ".");
+}
+
+void show_column(const string& data, int len)
+{
+    cout << std::setw(len) << std::right << ft_substr(data, len) << "|";
+}
+
+void haha(PhoneBook phonebook)
+{
+    while(1)
+    {
+        int index; 
+        cout << "Enter index: ";
+        if(cin.eof())
+            break;
+        if(!(std:: cin >> index))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid index. Please try again." << endl;
+        }
+
+        else if (index >= 0 && index < 8 && phonebook.contacts[index] != nullptr) 
+        {
+            cout << "Contact details for index " << index << ":" << endl;
+            cout << "First Name: " << phonebook.contacts[index]->getFirstName() << endl;
+            cout << "Last Name: " << phonebook.contacts[index]->getLastName() << endl;
+            cout << "Nickname: " << phonebook.contacts[index]->getNickname() << endl;
+            cout << "Phone Number: " << phonebook.contacts[index]->getPhoneNumber() << endl;
+            cout << "Darkest Secret: " << phonebook.contacts[index]->getDarkestSecret() << endl;
+            break;
+        }
+        else 
+        {
+            cout << "Invalid index. Please try again." << endl;
+            cin.clear();
+        }
+    }
+}
+
+
+int main() 
+{
     PhoneBook phonebook;
+    Contact *contact ;
+    int oldest_index = 0;
 
     string command;
-    while (1) 
+    while (true) 
     {
         cout << "Enter command: ";
         getline(cin, command);
         if (cin.eof())
             break;
-
+        if(command.empty())
+            continue;
         if (command == "ADD") 
         {
-            Contact* contact = new Contact();
-            cout << "Enter first name: ";
-            getline(cin, command);
-            contact->setFirstName(command);
-            cout << "Enter last name: ";
-            getline(cin, command);
-            contact->setLastName(command);
-            cout << "Enter nickname: ";
-            getline(cin, command);
-            contact->setNickname(command);
-            cout << "Enter phone number: ";
-            getline(cin, command);
-            contact->setPhoneNumber(command);
-            cout << "Enter darkest secret: ";
-            getline(cin, command);
-            contact->setDarkestSecret(command);
-
-            phonebook.addContact(contact);
+           contact = new Contact();
+            while(1)
+            {
+                cout << "Enter first name: ";
+                getline(cin, command);
+                if(command.empty())
+                {
+                    cout << "Invalid first name. Please try again." << endl;
+                    continue;
+                }
+                contact->setFirstName(command);
+                cout << "Enter last name: ";
+                getline(cin, command);
+                if(command.empty())
+                {
+                    cout << "Invalid last name. Please try again." << endl;
+                    continue;
+                }
+                contact->setLastName(command);
+                cout << "Enter nickname: ";
+                getline(cin, command);
+                if(command.empty())
+                {
+                    cout << "Invalid nickname. Please try again." << endl;
+                    continue;
+                }
+                contact->setNickname(command);
+                cout << "Enter phone number: ";
+                getline(cin, command);
+                if(command.empty())
+                {
+                    cout << "Invalid phone number. Please try again." << endl;
+                    continue;
+                }
+                else if(command.length() != 10)
+                {
+                    cout << "Invalid phone number. Please try again." << endl;
+                    continue;
+                }
+                contact->setPhoneNumber(command);
+                cout << "Enter darkest secret: ";
+                getline(cin, command);
+                if(command.empty())
+                {
+                    cout << "Invalid darkest secret. Please try again." << endl;
+                    continue;
+                }
+                contact->setDarkestSecret(command); 
+                phonebook.addContact(contact, oldest_index);
+                break;
+            }
         }
         else if (command == "SEARCH") 
         {
+            if(phonebook.contacts[0] == nullptr)
+            {
+                cout << "Phonebook is empty" << endl;
+                continue;
+            }
+            cout << std::setw(10) << std::right << "Index|";
+            cout << std::setw(10) << std::right << "First Name|";
+            cout << std::setw(10) << std::right << "Last Name|";
+            cout << std::setw(10) << std::right << "Nickname|" << endl;
             for (int i = 0; i < 8; i++) 
             {
                 if (phonebook.contacts[i] != nullptr) 
                 {
-                    cout << "Index: " << i << endl;
-                    cout << "First Name: " << phonebook.contacts[i]->getFirstName() << endl;
-                    cout << "Last Name: " << phonebook.contacts[i]->getLastName() << endl;
-                    cout << "Nickname: " << phonebook.contacts[i]->getNickname() << endl;
+                    cout << std::setw(10) << std::right << i << "|";
+                    show_column(phonebook.contacts[i]->getFirstName(), 10);
+                    show_column(phonebook.contacts[i]->getLastName(), 10);
+                    show_column(phonebook.contacts[i]->getNickname(), 10);
+                    cout << endl; 
                 }
             }
-            cout << "Enter index: ";
-            int index;
-            cin >> index;
-            cin.ignore(); // Clear the newline character from the input stream
-
-            if (index >= 0 && index < 8 && phonebook.contacts[index] != nullptr) 
-            {
-                cout << "Contact details for index " << index << ":" << endl;
-                cout << "First Name: " << phonebook.contacts[index]->getFirstName() << endl;
-                cout << "Last Name: " << phonebook.contacts[index]->getLastName() << endl;
-                cout << "Nickname: " << phonebook.contacts[index]->getNickname() << endl;
-                cout << "Phone Number: " << phonebook.contacts[index]->getPhoneNumber() << endl;
-                cout << "Darkest Secret: " << phonebook.contacts[index]->getDarkestSecret() << endl;
-            }
-            else 
-                cout << "Invalid index. Please try again." << endl;
+            haha(phonebook);
+            continue;
         }
         else if (command == "EXIT") 
         {
@@ -148,8 +260,7 @@ int main() {
             break;
         }
         else
-            cout << "Command not found" << endl;
+            cout << "Invalid command. Please try again." << endl;
     }
-
     return 0;
 }
