@@ -5,7 +5,7 @@ CC = g++
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -std=c++98
-NAME = phoneBook
+NAME = megaphone
 
 all: $(NAME)
 

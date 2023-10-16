@@ -6,14 +6,24 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:15:59 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 04:38:45 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/16 06:42:57 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
 #include "utils.hpp"
-
+int parsing_index(std::string command)
+{
+    int i = 0;
+    while (command[i])
+    {
+        if (!isdigit(command[i]))
+            return (1);
+        i++;
+    }
+    return (0);
+}
 void PhoneBook ::search_by_index()
 {
     while (1)
@@ -23,8 +33,9 @@ void PhoneBook ::search_by_index()
         std::cout << "Enter index: ";
 
         std::getline(std::cin, input);
-
-        if (input.empty() || !isdigit(input[0]))
+        if(std::cin.eof())
+            exit(0);
+        if (input.empty() || !isdigit(input[0]) || parsing_index(input))
         {
             std::cout << "Invalid index. Please try again." << std::endl;
             continue;
@@ -66,7 +77,7 @@ std::string enter_atrubiute(std::string atrubiute)
     }
     return command;
 }
-void    PhoneBook::add_contact(int &oldest_index)
+void    PhoneBook::add_contact()
 {
     Contact contact;
     std::string command;
@@ -88,7 +99,7 @@ void    PhoneBook::add_contact(int &oldest_index)
     }
     contact.setPhoneNumber(command);
     contact.setDarkestSecret(enter_atrubiute("darkest secret"));
-    addContact(contact, oldest_index);
+    addContact(contact);
 }
 
 
@@ -119,7 +130,6 @@ int main()
 {
     PhoneBook phonebook;
     Contact contact;
-    int oldest_index = 0;
 
     std::string command;
     while (true)
@@ -131,7 +141,7 @@ int main()
         if (command.empty())
             continue;
         if (command == "ADD")
-            phonebook.add_contact(oldest_index);
+            phonebook.add_contact();
         else if (command == "SEARCH")
         {
             if (phonebook.search_contact())
