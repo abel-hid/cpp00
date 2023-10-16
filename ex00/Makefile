@@ -1,19 +1,18 @@
 
 SRCS = megaphone.cpp
 OBJ = $(SRCS:.cpp=.o)
-CC = g++
+CPP = c++
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = megaphone
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)

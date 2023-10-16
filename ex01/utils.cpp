@@ -6,20 +6,20 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:48:33 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 06:52:15 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:24:12 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
-std::string ft_substr(const std::string &str, unsigned long len)
+std::string ft_substr(const std::string str, unsigned long len)
 {
     if (str.length() <= len)
         return str;
     return (str.substr(0, len - 1) + ".");
 }
 
-void show_column(const std::string &data, int len)
+void show_column(const std::string data, int len)
 {
     std::cout << std::setw(len) << std::right << ft_substr(data, len) << "|";
 }

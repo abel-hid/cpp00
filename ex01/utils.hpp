@@ -6,7 +6,7 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:48:58 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 03:51:21 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:24:50 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include <iomanip>
 # include <string>
 
-std::string ft_substr(const std::string &str, unsigned long len);
-void show_column(const std::string &data, int len);
-int isdigit_ss(std::string ss);
+std::string ft_substr(const std::string str, unsigned long len);
+void show_column(const std::string data, int len);
 int is_space(std::string command);
 int parsing_num(std::string command);
 

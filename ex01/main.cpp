@@ -6,13 +6,14 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:15:59 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 06:42:57 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:17:36 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
 #include "utils.hpp"
+
 int parsing_index(std::string command)
 {
     int i = 0;
@@ -24,6 +25,7 @@ int parsing_index(std::string command)
     }
     return (0);
 }
+
 void PhoneBook ::search_by_index()
 {
     while (1)
