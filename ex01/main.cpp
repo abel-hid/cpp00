@@ -6,7 +6,7 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:15:59 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 03:51:28 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:38:45 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,39 @@
 #include "PhoneBook.hpp"
 #include "utils.hpp"
 
-void haha(PhoneBook phonebook)
+void PhoneBook ::search_by_index()
 {
     while (1)
     {
+        std::string input;
         int index;
-        std::string command;
         std::cout << "Enter index: ";
-        // getline(cin, command);
-        // if (command.empty() || isdigit_ss(command))
-        // {
-        //     cout << "Invalid index. Please try again." << endl;
-        //     continue;
-        // }
-        // index = atoi(command.c_str());
 
-        if (std::cin.eof())
-            break;
-        if (!(std::cin >> index))
+        std::getline(std::cin, input);
+
+        if (input.empty() || !isdigit(input[0]))
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid index. Please try again." << std::endl;
             continue;
         }
-        if (index >= 0 && index < 8 && !phonebook.getContactByIndex(index).getFirstName().empty())
+        index = std::atoi(input.c_str());
+        if (index >= 0 && index < 8 && !getContactByIndex(index).getFirstName().empty())
         {
             std::cout << "Contact details for index " << index << ":" << std::endl;
-            std::cout << "First Name: " << phonebook.getContactByIndex(index).getFirstName() << std::endl;
-            std::cout << "Last Name: " << phonebook.getContactByIndex(index).getLastName() << std::endl;
-            std::cout << "Nickname: " << phonebook.getContactByIndex(index).getNickname() << std::endl;
-            std::cout << "Phone Number: " << phonebook.getContactByIndex(index).getPhoneNumber() << std::endl;
-            std::cout << "Darkest Secret: " << phonebook.getContactByIndex(index).getDarkestSecret() << std::endl;
-            std::cin.ignore();
+            std:: cout << "First name: " << getContactByIndex(index).getFirstName() << std::endl;
+            std:: cout << "Last name: " << getContactByIndex(index).getLastName() << std::endl;
+            std:: cout << "Nickname: " << getContactByIndex(index).getNickname() << std::endl;
+            std:: cout << "Phone number: " << getContactByIndex(index).getPhoneNumber() << std::endl;
+            std:: cout << "Darkest secret: " << getContactByIndex(index).getDarkestSecret() << std::endl;
             break;
         }
         else
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid index. Please try again." << std::endl;
         }
     }
 }
+
 
 std::string enter_atrubiute(std::string atrubiute)
 {
@@ -76,7 +66,7 @@ std::string enter_atrubiute(std::string atrubiute)
     }
     return command;
 }
-void add_contact(PhoneBook &phonebook, int &oldest_index)
+void    PhoneBook::add_contact(int &oldest_index)
 {
     Contact contact;
     std::string command;
@@ -89,7 +79,7 @@ void add_contact(PhoneBook &phonebook, int &oldest_index)
         getline(std::cin, command);
         if (std::cin.eof())
             exit(0);
-         if (command.empty() || is_space(command) || parsing_num(command))
+         else if (command.empty() || is_space(command) || parsing_num(command))
         {
             std::cout << "Invalid phone number. Please try again." << std::endl;
             continue;
@@ -98,13 +88,13 @@ void add_contact(PhoneBook &phonebook, int &oldest_index)
     }
     contact.setPhoneNumber(command);
     contact.setDarkestSecret(enter_atrubiute("darkest secret"));
-    phonebook.addContact(contact, oldest_index);
+    addContact(contact, oldest_index);
 }
 
 
-int search_contact(PhoneBook phonebook)
+int PhoneBook::search_contact()
 {
-    if(phonebook.getContactByIndex(0).getFirstName().empty())
+    if(getContactByIndex(0).getFirstName().empty())
     {
         std::cout << "No contacts found." << std::endl;
         return (1);
@@ -114,12 +104,12 @@ int search_contact(PhoneBook phonebook)
     std::cout << "----------|----------|----------|----------|" << std::endl;
     for (int i = 0; i < 8; i++)
     {
-        if (!phonebook.getContactByIndex(i).getFirstName().empty())
+        if (!getContactByIndex(i).getFirstName().empty())
         {
             std::cout << std::setw(10) << i << "|";
-            show_column(phonebook.getContactByIndex(i).getFirstName(), 10);
-            show_column(phonebook.getContactByIndex(i).getLastName(), 10);
-            show_column(phonebook.getContactByIndex(i).getNickname(), 10);
+            show_column(getContactByIndex(i).getFirstName(), 10);
+            show_column(getContactByIndex(i).getLastName(), 10);
+            show_column(getContactByIndex(i).getNickname(), 10);
             std::cout << std::endl;
         }
     }
@@ -141,12 +131,12 @@ int main()
         if (command.empty())
             continue;
         if (command == "ADD")
-            add_contact(phonebook, oldest_index);
+            phonebook.add_contact(oldest_index);
         else if (command == "SEARCH")
         {
-            if (search_contact(phonebook))
+            if (phonebook.search_contact())
                 continue;
-            haha(phonebook);
+            phonebook.search_by_index();
             continue;
         }
         else if (command == "EXIT")
