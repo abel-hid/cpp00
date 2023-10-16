@@ -1,25 +1,24 @@
 
 SRCS = megaphone.cpp
-
 OBJ = $(SRCS:.cpp=.o)
-
 CC = g++
-
 RM = rm -f
-
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -std=c++98
+NAME = phoneBook
 
-NAME = megaphone
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME)
-%.o: %.c
-	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	$(RM) $(OBJ) $(BOBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
 
-re: fclean $(NAME)
+re: fclean all
