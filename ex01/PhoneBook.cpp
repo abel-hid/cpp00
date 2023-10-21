@@ -6,7 +6,7 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 03:02:45 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/16 06:31:41 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/18 23:12:18 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ PhoneBook::PhoneBook()
     }
 }
 
-Contact PhoneBook::getContactByIndex(int index) const
+Contact PhoneBook::getContactByIndex(int index)
 {
     if (index >= 0 && index < 8)
         return contacts[index];
     else
         return Contact();
 }
-void PhoneBook::addContact(const Contact contact)
+void PhoneBook::addContact(Contact contact)
 {
     int i;
     for (i = 0; i < 8; i++)
