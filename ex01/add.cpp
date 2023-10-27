@@ -6,7 +6,7 @@
 /*   By: abel-hid <abel-hid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 19:46:34 by abel-hid          #+#    #+#             */
-/*   Updated: 2023/10/22 00:10:57 by abel-hid         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:52:02 by abel-hid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,7 @@
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-int is_alpha(std::string command)
-{
-    int i = 0;
-    while (command[i])
-    {
-        if (!isalpha(command[i]))
-            return (0);
-        i++;
-    }
-    return (1);
-}
+
 
 std::string enter_atrubiute(std::string atrubiute)
 {
@@ -35,7 +25,7 @@ std::string enter_atrubiute(std::string atrubiute)
         getline(std::cin, command);
         if (std::cin.eof())
             exit(0);
-        if (command.empty() || is_space(command) || !is_alpha(command))
+        if (command.empty() || is_space(command))
         {
             std::cout << "Invalid " << atrubiute << ". Please try again." << std::endl;
             continue;  
